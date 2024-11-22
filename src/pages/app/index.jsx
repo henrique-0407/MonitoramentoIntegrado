@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './index.scss';
 import axios from 'axios';
 import ECGChart from '../../components/esg';  // Componente de gráfico
+import HeartbeatChart from '../../components/bc';
 
 export default function App() {
   const [mensagem, setMensagem] = useState({});
@@ -24,7 +25,7 @@ export default function App() {
     
     // Chama a função na primeira renderização e a cada 2 segundos
     tome();
-    const intervalo = setInterval(tome, 1);
+    const intervalo = setInterval(tome, 1000);
 
     return () => clearInterval(intervalo);
   }, []);  // A dependência vazia [] significa que esse efeito acontece apenas uma vez, no carregamento inicial
@@ -42,13 +43,17 @@ export default function App() {
         </div>
 
         <div className='batimentos'>
-          <h3 className='bati'>batimentos</h3>
-          <h3 className='pox'>oxigenação</h3>
+          <h3 className='bati'>
+            Batimentos:
+            <HeartbeatChart sensorData={mensagem.sensorB || 0} />
+
+            </h3>
+          <h3 className='pox'>oxigenação:</h3>
         </div>
         <div className='grafico'>
         <h3 className='eletro'>
           Dados Eletrocardiograma:
-          <ECGChart ecgData={mensagem.ecg} />  {/* Passando os dados de ECG para o gráfico */}
+          <ECGChart ecgData={mensagem.ecg} />
         </h3>
         </div>
         

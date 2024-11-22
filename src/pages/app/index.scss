@@ -1,57 +1,85 @@
-.App{
-  background-color:black;
+.App {
+  background-color: rgb(45, 45, 45);
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
-  h3,h1{
-    color:#fff
-  }
-  .dados{
-    display: flex;
-    flex-direction: row;
-      .grafico{
-        display: flex;
-        width: 55vh;
-        border: 5px #fff solid;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        .eletro{
-          
-          padding: 10px;
-          
-        }
-      }
-    
-    .batimentos{
-      border: 5px #fff solid;
-      width: 20vh;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      padding: 10px
-    }
-    .temperatura{
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .presureSD{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: rgb(0, 0, 0);
-      padding: 10px;
-      border: 5px #fff solid;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius:10px ;
-      .pressao{
-        border: 10px #fff;
-      }
-    }
-    
-  }
+  justify-content: center;
   
+  font-family: 'Arial', sans-serif;
+}
+
+h1, h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.dados {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: auto;
+  
+  
+}
+
+.grafico {
+  display: flex;
+  width: 75%; 
+  height: 65vh; 
+  border: 5px #fff solid;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-decoration: solid #fff;
+  align-items: center;
+ 
+  justify-content: center;
+  padding: 20px;
+}
+
+.eletro {
+  padding: 15px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.batimentos {
+  display: flex;
+  width: 75%; 
+  height: 65vh; 
+  border: 5px #fff solid;
+  
+  
+  text-decoration: solid #fff;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.temperatura {
+  padding: 15px;
+  font-size: 1.5rem;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.presureSD {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 5px #fff solid;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-size: 1.5rem;
+  gap: 10px;
+}
+
+.pressao {
+  border: 1px #fff solid;
+  padding: 10px;
+  font-size: 2rem;
 }

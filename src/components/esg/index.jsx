@@ -12,9 +12,10 @@ const ECGChart = ({ ecgData }) => {
       label: 'ECG Real',
       data: [],  // Aqui ficam os valores do ECG
       fill: false,
-      borderColor: '#fff',
+      borderColor: 'red',  // Cor da linha para vermelho
+      color: 'white',  // Cor dos textos do gráfico (não é necessário aqui, pois usamos `text` em 'scales')
       tension: 0.1,
-      borderWidth: 1,
+      borderWidth: 2,  // Largura da linha
     }],
   });
 
@@ -51,6 +52,9 @@ const ECGChart = ({ ecgData }) => {
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          color: 'white',  // Cor das legendas
+        },
       },
       tooltip: {
         callbacks: {
@@ -63,16 +67,22 @@ const ECGChart = ({ ecgData }) => {
         title: {
           display: true,
           text: 'Tempo',
+          color: 'white',  // Cor do título do eixo X
         },
         ticks: {
           autoSkip: true,
           maxTicksLimit: 10,  // Limita o número de ticks no eixo X
+          color: 'white',  // Cor dos ticks no eixo X
         },
       },
       y: {
         title: {
           display: true,
           text: 'Amplitude',
+          color: 'white',  // Cor do título do eixo Y
+        },
+        ticks: {
+          color: 'white',  // Cor dos ticks no eixo Y
         },
         min: Math.min(...data.datasets[0].data) - 1, // Ajusta para a amplitude dos dados recebidos
         max: Math.max(...data.datasets[0].data) + 1, // Ajusta para a amplitude dos dados recebidos
