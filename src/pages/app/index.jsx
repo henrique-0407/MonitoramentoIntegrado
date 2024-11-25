@@ -45,10 +45,10 @@ export default function App() {
         <div className='batimentos'>
           <h3 className='bati'>
             Batimentos:
-            <HeartbeatChart sensorData={mensagem.sensorB || 0} />
+            <HeartbeatChart sensorData={mensagem.bpm || 0} />
 
             </h3>
-          <h3 className='pox'>oxigenação:</h3>
+          <h3 className='pox'>oxigenação: {mensagem.spO2}</h3>
         </div>
         <div className='grafico'>
         <h3 className='eletro'>
