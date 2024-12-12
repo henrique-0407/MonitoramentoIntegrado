@@ -1,67 +1,70 @@
 import { useEffect, useState } from 'react';
 import './index.scss';
 import axios from 'axios';
-import ECGChart from '../../components/esg';  // Componente de gráfico
-import HeartbeatChart from '../../components/bc';
+import ECGChart from '../../components/esg';  
+
 
 export default function App() {
-  const [mensagem, setMensagem] = useState({});
+
+  const [mensagem, setMensagem] = useState({
+    temperatura: '',
+    ecg: [],
+    pressao: ''
+
+  });
+
+  const [temperatura, setTemperatura] = useState('');
+
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
-    const tome = async () => {
+    const buscarDados = async () => {
       try {
-        let response = await axios.get('http://localhost:5050/mensagem/');
-        // Garantir que os valores de ECG sejam números
-        setMensagem({
-          temperatura: response.data.temperatura,
-          ecg: parseFloat(response.data.ecg) || 0,  // Garantir que o valor de ECG seja um número
-          pressao: response.data.pressao
-        });
+        const response = await axios.get('http://localhost:5050/mensagem/');
+        if (response.data) {
+          const dados = response.data;
+  
+          // Verifica se os campos existem e evita erros
+          const ecgData = dados.ecg ? dados.ecg.map(item => ({
+            valor: item.valor,
+            tempo: item.tempo
+          })) : [];
+  
+          setMensagem({
+            temperatura: dados.temperatura || '',
+            ecg: ecgData,
+            pressao: dados.pressao || '',
+            bpm: dados.bpm || 0,
+            spO2: dados.spO2 || 0
+          });
+        }
       } catch (error) {
-        setErro(error.message);
+        setErro(`Erro ao buscar dados: ${error.message}`);
       }
     };
-    
-    // Chama a função na primeira renderização e a cada 2 segundos
-    tome();
-    const intervalo = setInterval(tome, 1000);
-
+  
+    buscarDados();
+    const intervalo = setInterval(buscarDados, 1000);
+  
     return () => clearInterval(intervalo);
-  }, []);  // A dependência vazia [] significa que esse efeito acontece apenas uma vez, no carregamento inicial
-
+  }, []);
+  
   return (
     <div className="App">
       <h1>Dados ESP32</h1>
-      <div className='dados'>
-        
-
-        <div className='presureSD'>
-          <h3 className='pressao'>Pressão diastólica: {mensagem.pressao}</h3>
-          <h3 className='pressao'>Pressão sistolica: {mensagem.pressao}</h3>
-          <h3 className='temperatura'>Temperatura: {mensagem.temperatura}</h3>
+      <div className="dados">
+        <div className="presureSD">
+          <h3 className="pressao">Pressão diastólica: {mensagem.pressao}</h3>
+          <h3 className="pressao">Pressão sistólica: {mensagem.pressao}</h3>
+          <h3 className="temperatura">Temperatura: {mensagem.temperatura}</h3>
         </div>
-
-        <div className='batimentos'>
-          <h3 className='bati'>
-            Batimentos:
-            <HeartbeatChart sensorData={mensagem.bpm || 0} />
-
-            </h3>
-          <h3 className='pox'>oxigenação: {mensagem.spO2}</h3>
+        <div className="grafico">
+          <h3 className="eletro">
+            Dados Eletrocardiograma:
+            <ECGChart ecgData={mensagem.ecg} />
+          </h3>
         </div>
-        <div className='grafico'>
-        <h3 className='eletro'>
-          Dados Eletrocardiograma:
-          <ECGChart ecgData={mensagem.ecg} />
-        </h3>
-        </div>
-        
-
-        
-
       </div>
-      
     </div>
   );
 }
