@@ -3,17 +3,13 @@ import './index.scss';
 import axios from 'axios';
 import ECGChart from '../../components/esg';  
 
-
 export default function App() {
 
   const [mensagem, setMensagem] = useState({
     temperatura: '',
     ecg: [],
     pressao: ''
-
   });
-
-  const [temperatura, setTemperatura] = useState('');
 
   const [erro, setErro] = useState(null);
 
@@ -25,7 +21,7 @@ export default function App() {
           const dados = response.data;
   
           // Verifica se os campos existem e evita erros
-          const ecgData = dados.ecg ? dados.ecg.map(item => ({
+          const ecgData = dados.ECG ? dados.ECG.map(item => ({
             valor: item.valor,
             tempo: item.tempo
           })) : [];
@@ -33,9 +29,7 @@ export default function App() {
           setMensagem({
             temperatura: dados.temperatura || '',
             ecg: ecgData,
-            pressao: dados.pressao || '',
-            bpm: dados.bpm || 0,
-            spO2: dados.spO2 || 0
+            pressao: dados.pressao || ''
           });
         }
       } catch (error) {
