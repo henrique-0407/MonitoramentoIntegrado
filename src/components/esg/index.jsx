@@ -6,44 +6,36 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const ECGChart = ({ ecgData }) => {
   const [data, setData] = useState({
-    labels: [],  // Tempo em ms
-    datasets: [{
-      label: 'ECG Real',
-      data: [],  // Amplitude do ECG
-      fill: false,
-      borderColor: 'red',
-      tension: 0.1,
-      borderWidth: 2,
-      pointRadius: 0,  
-    }],
+    labels: [], // Tempo em ms
+    datasets: [
+      {
+        label: 'ECG Real',
+        data: [], // Amplitude do ECG
+        fill: false,
+        borderColor: 'red',
+        tension: 0.1,
+        borderWidth: 2,
+        pointRadius: 0,  
+      },
+    ],
   });
 
   useEffect(() => {
     if (ecgData && ecgData.length > 0) {
-      // Limpa o estado do gráfico antes de adicionar os novos valores
+      const newLabels = ecgData.map((entry) => entry.tempo); // Tempo em ms
+      const newData = ecgData.map((entry) => entry.valor);   // Valor do ECG (amplitude)
+
       setData({
-        labels: [],  // Reinicia os labels
-        datasets: [{
-          ...data.datasets[0],
-          data: [],  // Reinicia os dados
-        }],
-      });
-
-      // Atualiza o gráfico com os novos dados
-      setData((prevData) => {
-        const newLabels = ecgData.map(entry => entry.tempo);  // Tempo em ms
-        const newData = ecgData.map(entry => entry.valor);    // Valor do ECG (amplitude)
-
-        return {
-          labels: newLabels,
-          datasets: [{
-            ...prevData.datasets[0],
+        labels: newLabels,
+        datasets: [
+          {
+            ...data.datasets[0],
             data: newData,
-          }],
-        };
+          },
+        ],
       });
     } else {
-      console.error("Dados do ECG não recebidos corretamente");
+      console.error('Dados do ECG não recebidos corretamente');
     }
   }, [ecgData]);
 
@@ -58,7 +50,7 @@ const ECGChart = ({ ecgData }) => {
       },
       tooltip: {
         callbacks: {
-          label: (context) => `Valor: ${context.raw.toFixed(2)}`,  // Exibe o valor com 2 casas decimais
+          label: (context) => `Valor: ${context.raw.toFixed(2)}`, // Exibe o valor com 2 casas decimais
         },
       },
     },
@@ -66,7 +58,7 @@ const ECGChart = ({ ecgData }) => {
       x: {
         title: {
           display: true,
-          text: 'Tempo (ms)',  // Eixo X: Tempo em milissegundos
+          text: 'Tempo (ms)', // Eixo X: Tempo em milissegundos
           color: 'white',
         },
         ticks: {
@@ -81,14 +73,18 @@ const ECGChart = ({ ecgData }) => {
       y: {
         title: {
           display: true,
-          text: 'Amplitude (ECG)',  // Eixo Y: Amplitude do ECG
+          text: 'Amplitude (ECG)', // Eixo Y: Amplitude do ECG
           color: 'white',
         },
         ticks: {
           color: 'white',
         },
-        min: Math.min(...data.datasets[0].data) - 1,  // Define o mínimo do eixo Y com base nos dados
-        max: Math.max(...data.datasets[0].data) + 1,  // Define o máximo do eixo Y com base nos dados
+        min: data.datasets[0].data.length > 0
+          ? Math.min(...data.datasets[0].data) - 1
+          : 0, // Define o mínimo do eixo Y com base nos dados
+        max: data.datasets[0].data.length > 0
+          ? Math.max(...data.datasets[0].data) + 1
+          : 1, // Define o máximo do eixo Y com base nos dados
       },
     },
   };

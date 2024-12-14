@@ -33,7 +33,6 @@ h1, h3 {
   border-bottom-right-radius: 10px;
   text-decoration: solid #fff;
   align-items: center;
- 
   justify-content: center;
   padding: 20px;
 }
@@ -42,21 +41,9 @@ h1, h3 {
   padding: 15px;
   font-size: 1.5rem;
   color: #fff;
+  width: 500px;
+  height: auto;
  
-}
-
-.batimentos {
-  display: flex;
-  width: 75%; 
-  height: 65vh; 
-  border: 5px #fff solid;
-  
-  
-  text-decoration: solid #fff;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  flex-direction: column;
 }
 
 .temperatura {
