@@ -4,33 +4,34 @@ import axios from 'axios';
 import ECGChart from '../../components/esg';  
 
 export default function App() {
-
   const [mensagem, setMensagem] = useState({
-    temperatura: '',
-    ecg: [],
-    pressao: ''
+    ecg: []
   });
-
+  const [temp, setTemp] = useState(''); // Alterei para armazenar apenas o valor da temperatura como string ou número
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
     const buscarDados = async () => {
       try {
         const response = await axios.get('http://localhost:5050/mensagem/');
+        const responseT = await axios.get('http://localhost:5000/temp/');
+
         if (response.data) {
           const dados = response.data;
-  
-          // Verifica se os campos existem e evita erros
+          
           const ecgData = dados.ECG ? dados.ECG.map(item => ({
             valor: item.valor,
             tempo: item.tempo
           })) : [];
   
           setMensagem({
-            temperatura: dados.temperatura || '',
-            ecg: ecgData,
-            pressao: dados.pressao || ''
+            ecg: ecgData
           });
+        }
+
+        // Aqui você extrai a temperatura de responseT.data, assumindo que a resposta tem a chave 'temperatura'
+        if (responseT.data && responseT.data.temperatura) {
+          setTemp(responseT.data.temperatura);
         }
       } catch (error) {
         setErro(`Erro ao buscar dados: ${error.message}`);
@@ -50,7 +51,8 @@ export default function App() {
         <div className="presureSD">
           <h3 className="pressao">Pressão diastólica: {mensagem.pressao}</h3>
           <h3 className="pressao">Pressão sistólica: {mensagem.pressao}</h3>
-          <h3 className="temperatura">Temperatura: {mensagem.temperatura}</h3>
+          {/* Exibição da temperatura ajustada */}
+          <h3 className="temperatura">Temperatura: {temp}</h3>
         </div>
         <div className="grafico">
           <h3 className="eletro">
