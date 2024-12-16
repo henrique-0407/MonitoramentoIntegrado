@@ -54,8 +54,8 @@ export default function App() {
       <h1>Dados ESP32</h1>
       <div className="dados">
         <div className="presureSD">
-          <h3 className="pressao">Pressão: {press}</h3>
-          <h3 className="temperatura">Temperatura: {temp}</h3>
+          <h3 className="pressao">Pressão: {press} mmhg</h3>
+          <h3 className="temperatura">Temperatura: {temp} C°</h3>
         </div>
         <div className="grafico">
           <h3 className="eletro">
