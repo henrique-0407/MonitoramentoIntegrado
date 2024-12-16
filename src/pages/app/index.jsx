@@ -7,7 +7,8 @@ export default function App() {
   const [mensagem, setMensagem] = useState({
     ecg: []
   });
-  const [temp, setTemp] = useState(''); // Alterei para armazenar apenas o valor da temperatura como string ou número
+  const [temp, setTemp] = useState('');
+  const [press, setPress] = useState('');
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export default function App() {
       try {
         const response = await axios.get('http://localhost:5050/mensagem/');
         const responseT = await axios.get('http://localhost:5000/temp/');
+        const responseP = await axios.get('http://localhost:5010/press/');
 
         if (response.data) {
           const dados = response.data;
@@ -33,6 +35,9 @@ export default function App() {
         if (responseT.data && responseT.data.temperatura) {
           setTemp(responseT.data.temperatura);
         }
+        if (responseP.data && responseP.data.pressao_mmHg) {
+          setPress(responseP.data.pressao_mmHg);
+        }
       } catch (error) {
         setErro(`Erro ao buscar dados: ${error.message}`);
       }
@@ -49,9 +54,7 @@ export default function App() {
       <h1>Dados ESP32</h1>
       <div className="dados">
         <div className="presureSD">
-          <h3 className="pressao">Pressão diastólica: {mensagem.pressao}</h3>
-          <h3 className="pressao">Pressão sistólica: {mensagem.pressao}</h3>
-          {/* Exibição da temperatura ajustada */}
+          <h3 className="pressao">Pressão: {press}</h3>
           <h3 className="temperatura">Temperatura: {temp}</h3>
         </div>
         <div className="grafico">

@@ -6,7 +6,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
   font-family: 'Arial', sans-serif;
 }
 
@@ -19,14 +18,14 @@ h1, h3 {
 .dados {
   display: flex;
   flex-direction: row;
-  width: 90%;
-  height: auto;
+  align-items: center;
+  
 
 }
 
 .grafico {
   display: flex;
-  width: 75%; 
+  width: 700px; 
   height: 65vh; 
   border: 5px #fff solid;
   border-top-right-radius: 10px;
@@ -34,7 +33,7 @@ h1, h3 {
   text-decoration: solid #fff;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
 }
 
 .eletro {
@@ -51,18 +50,23 @@ h1, h3 {
   font-size: 1.5rem;
   color: #fff;
   border-radius: 10px;
+  font-size: 2rem;
+  
 }
 
 .presureSD {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  padding: 60px;
   border: 5px #fff solid;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   font-size: 1.5rem;
   gap: 10px;
+  width: 30%;
+  height: 75%;
 }
 
 .pressao {
